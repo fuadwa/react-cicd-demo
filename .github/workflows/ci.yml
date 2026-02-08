@@ -1,12 +1,10 @@
 name: React CI/CD (GitHub Pages)
 
-# Trigger the workflow on push to main branch
 on:
   push:
     branches:
       - main
 
-# Grant write permissions for deploying
 permissions:
   contents: write
 
@@ -15,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -29,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Run tests (CI mode disables watch mode)
+      # Step 4: Run tests
       - name: Run tests
         run: CI=true npm test
 
@@ -37,7 +35,7 @@ jobs:
       - name: Build React app
         run: npm run build
 
-      # Step 6: Configure Git identity for deployment
+      # Step 6: Set Git user for deploy
       - name: Set Git user
         run: |
           git config --global user.name "github-actions[bot]"
@@ -46,5 +44,5 @@ jobs:
       # Step 7: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Injects the token automatically
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run deploy
