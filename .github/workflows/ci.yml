@@ -25,10 +25,15 @@ jobs:
         run: npm install
 
       - name: Run tests
-        run: npm test -- --watchAll=false
+        run: CI=true npm test
 
       - name: Build React app
         run: npm run build
+
+      - name: Set Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Deploy to GitHub Pages
         run: npm run deploy
